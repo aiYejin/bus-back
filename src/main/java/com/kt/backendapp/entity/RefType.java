@@ -5,6 +5,6 @@ package com.kt.backendapp.entity;
  * 노선과 정류장을 구분하는 공통 타입
  */
 public enum RefType { 
-    ROUTE,  // 노선
-    STOP    // 정류장
+    ROUTE, // 노선
+    STOP   // 정류장
 }

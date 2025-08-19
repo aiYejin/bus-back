@@ -5,7 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.OffsetDateTime;
 
-// ⬇⬇ 추가
+// 추가
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,7 +22,7 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    // ⬇⬇ 응답에서 비밀번호는 숨기기(입력은 받음)
+    // 응답에서 비밀번호는 숨기기(입력은 받음)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password")
     private String password;

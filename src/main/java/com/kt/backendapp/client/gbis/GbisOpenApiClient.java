@@ -24,18 +24,17 @@ import java.util.List;
 public class GbisOpenApiClient {
     private final GbisOpenApiProps props;
 
-    /**
-     * 노선 검색 API
-     * @param keyword 검색할 노선번호
-     * @return 검색된 노선 목록
-     */
-    public List<RouteRes.Response.MsgBody.BusRouteList> searchRoutes(String keyword) {
+    // 인코딩된 서비스 키 생성
+    private String getEncodedServiceKey() {
         String serviceKey = props.key();
-        String encodedKey = URLEncoder.encode(serviceKey, StandardCharsets.UTF_8);
+        return URLEncoder.encode(serviceKey, StandardCharsets.UTF_8);
+    }
 
+    // 노선 검색 API
+    public List<RouteRes.Response.MsgBody.BusRouteList> searchRoutes(String keyword) {
         String url = "https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteListv2"
                 + "?format=json"
-                + "&serviceKey=" + encodedKey
+                + "&serviceKey=" + getEncodedServiceKey()
                 + "&keyword=" + keyword;
 
         System.out.println("Route Search URL: " + url);
@@ -66,18 +65,11 @@ public class GbisOpenApiClient {
         }
     }
     
-    /**
-     * 정류장 검색 API
-     * @param keyword 검색할 정류장명
-     * @return 검색된 정류장 목록
-     */
+    // 정류장 검색 API
     public List<StationRes.Response.MsgBody.BusStationList> searchStations(String keyword) {
-        String serviceKey = props.key();
-        String encodedKey = URLEncoder.encode(serviceKey, StandardCharsets.UTF_8);
-
         String url = "https://apis.data.go.kr/6410000/busstationservice/v2/getBusStationListv2"
                 + "?format=json"
-                + "&serviceKey=" + encodedKey
+                + "&serviceKey=" + getEncodedServiceKey()
                 + "&keyword=" + keyword;
 
         System.out.println("Station Search URL: " + url);
@@ -108,18 +100,11 @@ public class GbisOpenApiClient {
         }
     }
 
-    /**
-     * 정류장 도착 정보 API
-     * @param stationId 정류장 ID
-     * @return 해당 정류장의 버스 도착 정보
-     */
+    // 정류장 도착 정보 API
     public List<ArrivalRes.Response.MsgBody.BusArrivalList> getArrivals(String stationId) {
-        String serviceKey = props.key();
-        String encodedKey = URLEncoder.encode(serviceKey, StandardCharsets.UTF_8);
-      
         String url = "https://apis.data.go.kr/6410000/busarrivalservice/v2/getBusArrivalListv2"
                 + "?format=json"
-                + "&serviceKey=" + encodedKey
+                + "&serviceKey=" + getEncodedServiceKey()
                 + "&stationId=" + stationId;
 
         System.out.println("Arrival Search URL: " + url);
