@@ -13,8 +13,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(
     name = "favorites",
     uniqueConstraints = {
-        @UniqueConstraint(name = "ux_fav_user_type_provider_ref",
-            columnNames = {"user_id", "type", "provider", "ref_id"})
+        @UniqueConstraint(name = "ux_fav_user_type_ref",
+            columnNames = {"user_id", "type", "ref_id"})
     },
     indexes = {
         @Index(name = "ix_fav_user", columnList = "user_id"),
@@ -40,12 +40,6 @@ public class Favorite {
 
     @Column(name = "ref_id", nullable = false, length = 64)
     private String refId;
-
-    @Column(name = "provider", length = 16)
-    private String provider;
-
-    @Column(name = "city_code", length = 16)
-    private String cityCode;
 
     @Column(length = 100)
     private String alias;

@@ -33,12 +33,6 @@ public class Recent {
     @Column(name = "ref_id", nullable = false, length = 64)
     private String refId;
 
-    @Column(name = "provider", length = 16)
-    private String provider;
-
-    @Column(name = "city_code", length = 16)
-    private String cityCode;
-
     @CreationTimestamp
     @Column(name = "viewed_at", nullable = false)
     private OffsetDateTime viewedAt;
