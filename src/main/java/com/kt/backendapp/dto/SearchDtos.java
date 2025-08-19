@@ -1,6 +1,7 @@
 // src/main/java/com/kt/backendapp/dto/bus/SearchDtos.java
-package com.kt.backendapp.dto.bus;
+package com.kt.backendapp.dto;
 
+import com.kt.backendapp.entity.RefType;
 import java.util.List;
 
 /** 통합검색 응답 DTO 묶음 */
@@ -26,6 +27,7 @@ public final class SearchDtos {
     /** 검색 응답: 노선/정류장 배열 */
     public record SearchResponse(
         List<RouteItem> routes, // 노선 목록 (현재는 빈 배열)
-        List<StopItem> stops   // 정류장 목록
+        List<StopItem> stops,   // 정류장 목록
+        RefType type            // 검색 타입 (ROUTE 또는 STOP)
     ) {}
 }

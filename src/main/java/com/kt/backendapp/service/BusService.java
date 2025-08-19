@@ -12,39 +12,64 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BusService {
-  private final GbisOpenApiClient api;
+    private final GbisOpenApiClient api;
 
-  /** 통합 검색: 지금은 정류장만 매핑(노선은 추후 확장) */
-  public SearchDtos.SearchResponse search(String q) {
-    var stops = api.searchStations(q).stream().map(s ->
-        new SearchDtos.StopItem(
-            s.stationId.toString(),
-            s.stationName,
-            s.mobileNo, // ARS
-            s.y,        // lat
-            s.x         // lng
-        )
-    ).toList();
+    /** 통합 검색: 지금은 정류장만 매핑(노선은 추후 확장) */
+    public SearchDtos.SearchResponse search(String q) {
+        var stops = api.searchStations(q).stream().map(s ->
+            new SearchDtos.StopItem(
+                s.stationId.toString(),
+                s.stationName,
+                s.mobileNo, // ARS
+                s.y,        // lat
+                s.x         // lng
+            )
+        ).toList();
 
-    return new SearchDtos.SearchResponse(List.of(), stops);
-  }
+        var routes = api.searchRoutes(q).stream().map(r ->
+            new SearchDtos.RouteItem(
+                r.routeId.toString(),
+                r.routeName,
+                r.startStationName,
+                r.endStationName
+            )
+        ).toList();
 
-  /** 정류장 도착 */
-  public ArrivalDtos.ListResponse arrivals(String stationId) {
-    var items = api.getArrivals(stationId).stream().map(a ->
-        new ArrivalDtos.Item(
-            a.routeId,
-            a.routeName,
-            a.predictTime1, // 남은 분
-            a.locationNo1,  // 몇 정류장 전
-            null,           // lastBus: 문서에 없으면 null
-            null            // congestion: 문서에 없으면 null
-        )
-    ).toList();
+        return new SearchDtos.SearchResponse(routes, stops);
+    }
 
-    return new ArrivalDtos.ListResponse(
-        new ArrivalDtos.StationInfo(stationId, null, null, null, null),
-        items
-    );
-  }
+    /** 정류장 도착 */
+    public ArrivalDtos.ListResponse arrivals(String stationId) {
+        var items = api.getArrivals(stationId).stream().map(a ->
+            new ArrivalDtos.Item(
+                a.routeId.toString(),
+                a.routeName,
+                // 첫번째 차량
+                a.predictTime1,
+                a.locationNo1,
+                a.flag,
+                getCongestionText(a.crowded1),
+                a.plateNo1,
+                // 두번째 차량
+                a.predictTime2,
+                a.locationNo2,
+                a.flag, // flag는 노선 전체 상태
+                getCongestionText(a.crowded2),
+                a.plateNo2
+            )
+        ).toList();
+
+        return new ArrivalDtos.ListResponse(items);
+    }
+
+    private String getCongestionText(Integer crowded) {
+        if (crowded == null) return null;
+        return switch (crowded) {
+            case 1 -> "여유";
+            case 2 -> "보통";
+            case 3 -> "혼잡";
+            case 4 -> "매우혼잡";
+            default -> null;
+        };
+    }
 }

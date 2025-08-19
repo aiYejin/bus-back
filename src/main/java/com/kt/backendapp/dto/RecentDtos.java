@@ -1,12 +1,13 @@
 package com.kt.backendapp.dto;
 
+import com.kt.backendapp.entity.RefType;
 import java.time.OffsetDateTime;
 
 public final class RecentDtos {
     // 최근검색 추가 요청 바디
     public record AddRequest(
         Long userId,
-        String entityType, // "ROUTE" | "STOP"
+        RefType entityType, // ROUTE | STOP
         String refId
     ) {}
 
@@ -14,7 +15,7 @@ public final class RecentDtos {
     public record Item(
         Long id,
         Long userId,
-        String entityType,
+        RefType entityType, // ROUTE | STOP
         String refId,
         OffsetDateTime viewedAt
     ) {}

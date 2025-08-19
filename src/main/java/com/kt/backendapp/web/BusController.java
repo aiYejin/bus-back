@@ -16,7 +16,6 @@ public class BusController {
 
   @GetMapping(value="/search", produces=MediaType.APPLICATION_JSON_VALUE)
   public SearchDtos.SearchResponse search(@RequestParam String q) {
-    System.out.println("-----------------------------------");
     return service.search(q);
   }
 
