@@ -2,10 +2,10 @@ package com.kt.backendapp.dto.bus;
 
 import java.util.List;
 
-/** 정류장 도착정보 응답 DTO 묶음 */
+// 정류장 도착정보 응답 DTO 묶음
 public final class ArrivalDtos {
 
-    /** 한 노선의 도착 정보 */
+    // 한 노선의 도착 정보
     public record Item(
         String routeId,
         String routeName,
@@ -23,7 +23,7 @@ public final class ArrivalDtos {
         String plateNo2         // 두번째 차량 번호
     ) {}
 
-    /** 전체 응답 */
+    // 전체 응답
     public record ListResponse(
         List<Item> arrivals
     ) {}

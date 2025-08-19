@@ -14,7 +14,7 @@ import java.util.List;
 public class BusService {
     private final GbisOpenApiClient api;
 
-    /** 통합 검색: 지금은 정류장만 매핑(노선은 추후 확장) */
+    // 통합 검색: 지금은 정류장만 매핑(노선은 추후 확장)
     public SearchDtos.SearchResponse search(String q) {
         var stops = api.searchStations(q).stream().map(s ->
             new SearchDtos.StopItem(
@@ -38,7 +38,7 @@ public class BusService {
         return new SearchDtos.SearchResponse(routes, stops);
     }
 
-    /** 정류장 도착 */
+    // 정류장 도착
     public ArrivalDtos.ListResponse arrivals(String stationId) {
         var items = api.getArrivals(stationId).stream().map(a ->
             new ArrivalDtos.Item(
