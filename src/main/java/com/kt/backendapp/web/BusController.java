@@ -21,9 +21,9 @@ public class BusController {
     return service.search(q);
   }
 
-  @GetMapping(value="/stops/{stationId}/arrivals", produces=MediaType.APPLICATION_JSON_VALUE)
-  public ArrivalDtos.ListResponse arrivals(@PathVariable String stationId) {
-    return service.arrivals(stationId);
+  @GetMapping(value="/stations/{stationId}/detail", produces=MediaType.APPLICATION_JSON_VALUE)
+  public DetailDtos.StationDetailResponse getStationDetail(@PathVariable String stationId) {
+      return service.getStationDetail(stationId);
   }
 
   @GetMapping(value="/routes/{routeId}/detail", produces=MediaType.APPLICATION_JSON_VALUE)

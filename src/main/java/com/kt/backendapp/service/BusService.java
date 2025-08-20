@@ -40,9 +40,14 @@ public class BusService {
         return new SearchDtos.SearchResponse(routes, stops);
     }
 
-    // 정류장 도착
-    public ArrivalDtos.ListResponse arrivals(String stationId) {
-        var items = api.getArrivals(stationId).stream().map(a ->
+    // 정류장 상세 정보 (도착 정보 포함)
+    public DetailDtos.StationDetailResponse getStationDetail(String stationId) {
+        // 1. 정류장 상세 정보
+        var station = api.getStationDetail(stationId);
+        if (station == null) return null;
+        
+        // 2. 도착 정보 가져오기
+        var arrivals = api.getArrivals(stationId).stream().map(a ->
             new ArrivalDtos.Item(
                 a.routeId.toString(),
                 a.routeName,
@@ -61,7 +66,16 @@ public class BusService {
             )
         ).toList();
 
-        return new ArrivalDtos.ListResponse(items);
+        return new DetailDtos.StationDetailResponse(
+            station.stationId.toString(),
+            station.stationName,
+            station.mobileNo,
+            station.y,
+            station.x,
+            station.regionName,
+            station.centerYn,
+            arrivals
+        );
     }
 
 

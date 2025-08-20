@@ -6,6 +6,7 @@ import com.kt.backendapp.dto.gbis.ArrivalRes;
 import com.kt.backendapp.dto.gbis.RoutesRes;
 import com.kt.backendapp.dto.gbis.RouteRes;
 import com.kt.backendapp.dto.gbis.RouteStationRes;
+import com.kt.backendapp.dto.gbis.StationRes;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -208,6 +209,44 @@ public class GbisOpenApiClient {
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return List.of();
+        }
+    }
+
+    // 정류장 상세 정보 API
+    public StationRes.Response.MsgBody.BusStationInfo getStationDetail(String stationId) {
+        String url = "https://apis.data.go.kr/6410000/busstationservice/v2/busStationInfov2"
+                + "?format=json"
+                + "&serviceKey=" + getEncodedServiceKey()
+                + "&stationId=" + stationId;
+
+        System.out.println("Station Detail URL: " + url);
+        
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            
+            System.out.println("Status Code: " + response.statusCode());
+            System.out.println("Response Body:\n" + response.body());
+            
+            ObjectMapper mapper = new ObjectMapper();
+            StationRes res = mapper.readValue(response.body(), StationRes.class);
+            
+            if (res != null && res.response != null && res.response.msgBody != null && 
+                res.response.msgBody.busStationInfo != null) {
+                return res.response.msgBody.busStationInfo;
+            }
+            return null;
+                    
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            return null;
         }
     }
 }
