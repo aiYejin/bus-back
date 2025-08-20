@@ -4,6 +4,8 @@ package com.kt.backendapp.service;
 import com.kt.backendapp.client.gbis.GbisOpenApiClient;
 import com.kt.backendapp.dto.bus.ArrivalDtos;
 import com.kt.backendapp.dto.bus.SearchDtos;
+import com.kt.backendapp.dto.bus.DetailDtos;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,9 @@ import java.util.List;
 public class BusService {
     private final GbisOpenApiClient api;
 
-    // 통합 검색: 지금은 정류장만 매핑(노선은 추후 확장)
+    // 검색 조회
     public SearchDtos.SearchResponse search(String q) {
-        var stops = api.searchStations(q).stream().map(s ->
+        var stops = api.getStations(q).stream().map(s ->
             new SearchDtos.StopItem(
                 s.stationId.toString(),
                 s.stationName,
@@ -26,7 +28,7 @@ public class BusService {
             )
         ).toList();
 
-        var routes = api.searchRoutes(q).stream().map(r ->
+        var routes = api.getRoutes(q).stream().map(r ->
             new SearchDtos.RouteItem(
                 r.routeId.toString(),
                 r.routeName,
@@ -60,6 +62,52 @@ public class BusService {
         ).toList();
 
         return new ArrivalDtos.ListResponse(items);
+    }
+
+
+    // 노선 상세 정보 (정류장 목록 포함)
+    public DetailDtos.RouteDetailResponse getRouteDetail(String routeId) {
+        var route = api.getRoute(routeId);
+        if (route == null) return null;
+        
+        // 노선별 정류장 목록 가져오기
+        var stations = api.getRouteStations(routeId).stream().map(s ->
+            new DetailDtos.StationItem(
+                s.stationId.toString(),
+                s.stationName,
+                s.mobileNo,
+                s.stationSeq,
+                s.y,        // lat
+                s.x,        // lng
+                s.regionName,
+                s.adminName,
+                s.centerYn,
+                s.turnYn,
+                s.turnSeq
+            )
+        ).toList();
+        
+        return new DetailDtos.RouteDetailResponse(
+            route.routeId.toString(),
+            route.routeName,
+            route.startStationName,
+            route.endStationName,
+            route.routeTypeName,
+            route.regionName,
+            route.adminName,
+            route.companyName,
+            route.companyTel,
+            route.garageName,
+            route.garageTel,
+            route.upFirstTime.toString(),     
+            route.upLastTime.toString(),        
+            route.downFirstTime.toString(),  
+            route.downLastTime.toString(), 
+            route.peekAlloc,
+            route.nPeekAlloc,
+            route.turnStNm,
+            stations
+        );
     }
 
     private String getCongestionText(Integer crowded) {

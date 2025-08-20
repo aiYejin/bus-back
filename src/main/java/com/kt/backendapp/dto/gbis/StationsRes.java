@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true) 
-public class StationRes {
+public class StationsRes {
     @JsonIgnoreProperties(ignoreUnknown = true) 
     public static class Response {
         public String comMsgHeader;

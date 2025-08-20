@@ -1,46 +1,75 @@
 package com.kt.backendapp.dto.gbis;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.List;
 
-/**
- * GBIS 노선 검색 API 응답 DTO
- * JSON 응답을 Java 객체로 매핑
- */
-@JsonIgnoreProperties(ignoreUnknown = true) 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RouteRes {
-    @JsonIgnoreProperties(ignoreUnknown = true) 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Response {
-        public String comMsgHeader; // 공통 메시지 헤더
+        public String comMsgHeader;
         
-        @JsonIgnoreProperties(ignoreUnknown = true) 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class MsgHeader {
-            public String queryTime;     // 쿼리 실행 시간
-            public Integer resultCode;   // 결과 코드 (0: 성공)
-            public String resultMessage; // 결과 메시지
+            public String queryTime;
+            public Integer resultCode;
+            public String resultMessage;
         }
-        public MsgHeader msgHeader; // 메시지 헤더
+        public MsgHeader msgHeader;
         
-        @JsonIgnoreProperties(ignoreUnknown = true) 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class MsgBody {
-            @JsonIgnoreProperties(ignoreUnknown = true) 
-            public static class BusRouteList {
-                public String busRouteList;      // 노선번호목록
-                public String startStationName;  // 기점정류소명
-                public String adminName;         // 인면허기관명
-                public Integer districtCd;       // 관할지역코드 (1:서울,2:경기,3:인천)
-                public Integer endStationId;     // 종점정류소아이디
-                public String endStationName;    // 종점정류소명
-                public String regionName;        // 운행지역
-                public Integer routeId;          // 노선아이디
-                public String routeName;         // 노선번호
-                public Integer routeTypeCd;      // 노선유형코드
-                public String routeTypeName;     // 노선유형명
-                public Integer startStationId;   // 기점정류소아이디
+            @JsonIgnoreProperties(ignoreUnknown = true)
+            public static class BusRouteInfoItem {
+                public String busRouteInfoItem;
+                public Integer sunPeekAlloc;
+                public String adminName;
+                public Integer companyId;
+                public String companyName;
+                public String companyTel;
+                public Integer districtCd;
+                public String downFirstTime;
+                public String downLastTime;
+                public Integer endMobileNo;
+                public Integer endStationId;
+                public String endStationName;
+                public String garageName;
+                public String garageTel;
+                public String multiFlag;
+                public Integer peekAlloc;
+                public String regionName;
+                public Integer routeId;
+                public String routeName;
+                public Integer routeTypeCd;
+                public String routeTypeName;
+                public String satDownFirstTime;
+                public String satDownLastTime;
+                public Integer satNPeekAlloc;
+                public Integer satPeekAlloc;
+                public String satUpFirstTime;
+                public String satUpLastTime;
+                public Integer startStationId;
+                public String startStationName;
+                public Integer startMobileNo;
+                public String sunDownFirstTime;
+                public String sunDownLastTime;
+                public Integer sunNPeekAlloc;
+                public String sunUpFirstTime;
+                public String sunUpLastTime;
+                public Integer turnStID;
+                public String turnStNm;
+                public String upFirstTime;
+                public String upLastTime;
+                public String weDownFirstTime;
+                public String weDownLastTime;
+                public Integer weNPeekAlloc;
+                public Integer wePeekAlloc;
+                public String weUpFirstTime;
+                public String weUpLastTime;
+                public Integer nPeekAlloc;
             }
-            public List<BusRouteList> busRouteList; // 노선 목록
+            public BusRouteInfoItem busRouteInfoItem;
         }
-        public MsgBody msgBody; // 메시지 본문
+        public MsgBody msgBody;
     }
-    public Response response; // 최상위 응답 객체
+    public Response response;
 }
