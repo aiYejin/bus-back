@@ -11,7 +11,8 @@ public final class FavoriteDtos {
         Long userId,
         RefType type,
         String refId,
-        String refName,      // 노선명 또는 정류장명
+        String refName,
+        String additionalInfo,  // 추가 정보
         String alias,
         OffsetDateTime createdAt
     ) {}
@@ -21,7 +22,8 @@ public final class FavoriteDtos {
         Long userId,
         RefType type,
         String refId,
-        String refName,      // 노선명 또는 정류장명 추가
+        String refName,
+        String additionalInfo,  // 추가 정보
         String alias
     ) {}
     

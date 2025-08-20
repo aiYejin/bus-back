@@ -11,7 +11,8 @@ public final class RecentDtos {
         Long userId,
         RefType entityType,
         String refId,
-        String refName,      // 노선명 또는 정류장명
+        String refName,
+        String additionalInfo,  // 추가 정보
         OffsetDateTime viewedAt
     ) {}
     
@@ -20,6 +21,7 @@ public final class RecentDtos {
         Long userId,
         RefType entityType,
         String refId,
-        String refName
+        String refName,
+        String additionalInfo
     ) {}
 }

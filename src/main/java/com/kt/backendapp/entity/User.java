@@ -5,11 +5,10 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.OffsetDateTime;
 
-// 추가
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // 프록시 속성 무시
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "users", indexes = {
     @Index(name = "ux_users_email", columnList = "email", unique = true)
@@ -19,16 +18,25 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)  // username 추가 (중복 가능)
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String email;
 
-    // 응답에서 비밀번호는 숨기기(입력은 받음)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "password", nullable = false)  // NOT NULL로 변경
+    @Column(name = "password", nullable = false)
     private String password;
+
+    // 현재 위치 정보 추가
+    @Column(name = "current_lat")
+    private Double currentLat;  // 현재 위도
+
+    @Column(name = "current_lng")
+    private Double currentLng;  // 현재 경도
+
+    @Column(name = "location_updated_at")
+    private OffsetDateTime locationUpdatedAt;  // 위치 업데이트 시간
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)

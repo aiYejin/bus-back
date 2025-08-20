@@ -31,20 +31,21 @@ public class FavoriteService {
         // 사용자 존재 확인
         User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-    
+
         // 중복 체크
         if (repository.findByUserIdAndTypeAndRefId(request.userId(), request.type(), request.refId()).isPresent()) {
             throw new IllegalArgumentException("이미 즐겨찾기에 추가된 항목입니다.");
         }
-    
+
         Favorite favorite = Favorite.builder()
                 .user(user)
                 .type(request.type())
                 .refId(request.refId())
-                .refName(request.refName())  // 노선명/정류장명 추가
+                .refName(request.refName())
+                .additionalInfo(request.additionalInfo())  // 추가 정보
                 .alias(request.alias())
                 .build();
-    
+
         Favorite saved = repository.save(favorite);
         return mapToFavoriteItem(saved);
     }
@@ -87,7 +88,8 @@ public class FavoriteService {
                 favorite.getUserIdForJson(),
                 favorite.getType(),
                 favorite.getRefId(),
-                favorite.getRefName(),  // 노선명/정류장명 추가
+                favorite.getRefName(),
+                favorite.getAdditionalInfo(),  // 추가 정보
                 favorite.getAlias(),
                 favorite.getCreatedAt()
         );

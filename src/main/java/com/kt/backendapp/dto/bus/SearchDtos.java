@@ -28,4 +28,9 @@ public final class SearchDtos {
         List<RouteItem> routes, // 노선 목록
         List<StopItem> stops   // 정류장 목록
     ) {}
+
+    // 주변 정류장 응답
+    public record StationAroundResponse(
+        List<StopItem> stations  // 정류장 목록
+    ) {}
 }

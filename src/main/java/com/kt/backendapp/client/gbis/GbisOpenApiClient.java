@@ -7,6 +7,7 @@ import com.kt.backendapp.dto.gbis.RoutesRes;
 import com.kt.backendapp.dto.gbis.RouteRes;
 import com.kt.backendapp.dto.gbis.RouteStationRes;
 import com.kt.backendapp.dto.gbis.StationRes;
+import com.kt.backendapp.dto.gbis.StationAroundRes;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -247,6 +248,42 @@ public class GbisOpenApiClient {
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return null;
+        }
+    }
+
+    // 주변 정류장 목록 API
+    public List<StationAroundRes.Response.MsgBody.BusStationAroundList> getStationsAround(String x, String y) {
+        String url = "https://apis.data.go.kr/6410000/busstationservice/v2/getBusStationAroundListv2"
+                + "?format=json"
+                + "&serviceKey=" + getEncodedServiceKey()
+                + "&x=" + x
+                + "&y=" + y;
+
+        System.out.println("Station Around URL: " + url);
+        
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            
+            System.out.println("Status Code: " + response.statusCode());
+            System.out.println("Response Body:\n" + response.body());
+            
+            ObjectMapper mapper = new ObjectMapper();
+            StationAroundRes res = mapper.readValue(response.body(), StationAroundRes.class);
+            
+            return (res != null && res.response != null && res.response.msgBody != null && 
+                    res.response.msgBody.busStationAroundList != null) ? res.response.msgBody.busStationAroundList : List.of();
+                    
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            return List.of();
         }
     }
 }

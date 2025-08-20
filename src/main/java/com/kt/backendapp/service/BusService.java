@@ -5,17 +5,22 @@ import com.kt.backendapp.client.gbis.GbisOpenApiClient;
 import com.kt.backendapp.dto.bus.ArrivalDtos;
 import com.kt.backendapp.dto.bus.SearchDtos;
 import com.kt.backendapp.dto.bus.DetailDtos;
+import com.kt.backendapp.entity.User;
+import com.kt.backendapp.repository.UserRepository;
+
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.OffsetDateTime;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BusService {
     private final GbisOpenApiClient api;
-
+    private final UserRepository userRepository;
+    
     // 검색 조회
     public SearchDtos.SearchResponse search(String q) {
         var stops = api.getStations(q).stream().map(s ->
@@ -134,4 +139,44 @@ public class BusService {
             default -> null;
         };
     }
+
+    // 주변 정류장 검색
+    public SearchDtos.StationAroundResponse getStationsAround(String x, String y) {
+        var stations = api.getStationsAround(x, y).stream().map(s ->
+            new SearchDtos.StopItem(
+                s.stationId.toString(),
+                s.stationName,
+                s.mobileNo != null ? s.mobileNo : "",  // null 체크 다시 추가
+                s.y,        // lat
+                s.x         // lng
+            )
+        ).toList();
+
+        return new SearchDtos.StationAroundResponse(stations);
+    }
+
+    // 사용자 위치 업데이트
+    @Transactional
+    public void updateUserLocation(Long userId, Double lat, Double lng) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        
+        user.setCurrentLat(lat);
+        user.setCurrentLng(lng);
+        user.setLocationUpdatedAt(OffsetDateTime.now());
+        
+        userRepository.save(user);
+    }
+
+    // 사용자 위치 기반 주변 정류장
+    public SearchDtos.StationAroundResponse getNearbyStations(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        
+        // 사용자 위치가 없으면 기본값 사용 (강남역)
+        Double lat = user.getCurrentLat() != null ? user.getCurrentLat() : 37.49545;
+        Double lng = user.getCurrentLng() != null ? user.getCurrentLng() : 127.0284667;
+        
+        return getStationsAround(lat.toString(), lng.toString());
+}
 }

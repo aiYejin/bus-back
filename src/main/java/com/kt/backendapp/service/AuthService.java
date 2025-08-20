@@ -48,3 +48,4 @@ public class AuthService {
                 "회원가입 성공"
         );
     }
+}

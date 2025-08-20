@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.OffsetDateTime;
 
-// 추가
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -20,7 +19,6 @@ public class Recent {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // JSON 응답에서 user 객체는 제외
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -33,11 +31,16 @@ public class Recent {
     @Column(name = "ref_id", nullable = false, length = 64)
     private String refId;
 
+    @Column(name = "ref_name", nullable = false, length = 100)
+    private String refName;  // 노선명 또는 정류장명
+
+    @Column(name = "additional_info", length = 200)
+    private String additionalInfo;  // "강남역 ↔ 서초역" 또는 "02301"
+
     @CreationTimestamp
     @Column(name = "viewed_at", nullable = false)
     private OffsetDateTime viewedAt;
 
-    // 필요시 userId만 노출
     @JsonProperty("userId")
     public Long getUserIdForJson() {
         return (user != null) ? user.getId() : null;
