@@ -26,7 +26,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class GbisOpenApiClient {
-    private final GbisOpenApiProps props;
+  private final GbisOpenApiProps props;
 
     // 인코딩된 서비스 키 생성
     private String getEncodedServiceKey() {

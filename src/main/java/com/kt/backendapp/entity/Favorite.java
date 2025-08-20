@@ -28,6 +28,9 @@ public class Favorite {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "ref_name", nullable = false, length = 100)
+    private String refName;  // 노선명 또는 정류장명
+
     // JSON 응답에서 user 객체는 제외
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -19,12 +19,15 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)  // username 추가 (중복 가능)
+    private String username;
+
     @Column(nullable = false)
     private String email;
 
     // 응답에서 비밀번호는 숨기기(입력은 받음)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)  // NOT NULL로 변경
     private String password;
 
     @CreationTimestamp

@@ -1,4 +1,4 @@
-package com.kt.backendapp.dto;
+package com.kt.backendapp.dto.bus;
 
 public final class AuthDtos {
     
