@@ -51,7 +51,20 @@ public class RecentService {
                 .build();
 
         Recent saved = repository.save(recent);
+
+        cleanupOldRecents(request.userId());
+
         return mapToRecentItem(saved);
+    }
+
+    private void cleanupOldRecents(Long userId) {
+        List<Recent> allRecents = repository.findByUserIdOrderByViewedAtDesc(userId);
+        
+        if (allRecents.size() > 20) {
+            // 20개를 초과하는 오래된 항목들 삭제
+            List<Recent> toDelete = allRecents.subList(20, allRecents.size());
+            repository.deleteAll(toDelete);
+        }
     }
 
     // Entity를 DTO로 변환

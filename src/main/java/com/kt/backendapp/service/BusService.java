@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class BusService {
     private final GbisOpenApiClient api;
     private final UserRepository userRepository;
-    
+
     // 검색 조회
     public SearchDtos.SearchResponse search(String q) {
         var stops = api.getStations(q).stream().map(s ->
@@ -178,5 +178,5 @@ public class BusService {
         Double lng = user.getCurrentLng() != null ? user.getCurrentLng() : 127.0284667;
         
         return getStationsAround(lat.toString(), lng.toString());
-}
+    }
 }
