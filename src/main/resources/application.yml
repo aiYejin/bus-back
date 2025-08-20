@@ -26,3 +26,6 @@ logging:
 gbis-openapi:
   base: ${GBIS_OPENAPI_BASE}
   key:  ${GBIS_SERVICE_KEY}
+
+cors:
+  allowed-origins: http://localhost:3000
