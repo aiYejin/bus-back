@@ -5,6 +5,7 @@ import com.kt.backendapp.dto.BusReportDtos;
 import com.kt.backendapp.service.BusReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class BusReportController {
 
     // 신고 등록
     @PostMapping
-    public BusReportDtos.BusReportItem addReport(@RequestBody BusReportDtos.AddBusReportRequest request) {
+    public BusReportDtos.BusReportItem addReport(@Valid @RequestBody BusReportDtos.AddBusReportRequest request) {
         return service.addReport(request);
     }
 }

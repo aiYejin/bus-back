@@ -4,6 +4,7 @@ import com.kt.backendapp.dto.bus.AuthDtos;
 import com.kt.backendapp.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -13,19 +14,19 @@ public class AuthController {
 
     // 로그인
     @PostMapping("/login")
-    public AuthDtos.AuthResponse login(@RequestBody AuthDtos.LoginRequest request) {
+    public AuthDtos.AuthResponse login(@Valid @RequestBody AuthDtos.LoginRequest request) {
         return service.login(request);
     }
 
     // 회원가입
     @PostMapping("/signup")
-    public AuthDtos.AuthResponse signup(@RequestBody AuthDtos.SignupRequest request) {
+    public AuthDtos.AuthResponse signup(@Valid @RequestBody AuthDtos.SignupRequest request) {
         return service.signup(request);
     }
 
     // 비밀번호 찾기
     @PostMapping("/find-password")
-    public AuthDtos.MessageResponse findPassword(@RequestBody AuthDtos.FindPasswordRequest request) {
+    public AuthDtos.MessageResponse findPassword(@Valid @RequestBody AuthDtos.FindPasswordRequest request) {
         return service.findPassword(request);
     }
 
@@ -39,7 +40,7 @@ public class AuthController {
     @PutMapping("/users/{userId}")
     public AuthDtos.MessageResponse updateUser(
             @PathVariable Long userId,
-            @RequestBody AuthDtos.UpdateUserRequest request) {
+            @Valid @RequestBody AuthDtos.UpdateUserRequest request) {
         return service.updateUser(userId, request);
     }
 
@@ -47,7 +48,7 @@ public class AuthController {
     @PutMapping("/users/{userId}/password")
     public AuthDtos.MessageResponse changePassword(
             @PathVariable Long userId,
-            @RequestBody AuthDtos.ChangePasswordRequest request) {
+            @Valid @RequestBody AuthDtos.ChangePasswordRequest request) {
         return service.changePassword(userId, request);
     }
 
@@ -55,7 +56,7 @@ public class AuthController {
     @DeleteMapping("/users/{userId}")
     public AuthDtos.MessageResponse deleteAccount(
             @PathVariable Long userId,
-            @RequestBody AuthDtos.DeleteAccountRequest request) {
+            @Valid @RequestBody AuthDtos.DeleteAccountRequest request) {
         return service.deleteAccount(userId, request);
     }
 }

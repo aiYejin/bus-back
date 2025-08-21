@@ -5,6 +5,7 @@ import com.kt.backendapp.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class NotificationController {
 
     // 알림 설정 추가
     @PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
-    public NotificationDtos.NotificationItem addNotification(@RequestBody NotificationDtos.AddNotificationRequest request) {
+    public NotificationDtos.NotificationItem addNotification(@Valid @RequestBody NotificationDtos.AddNotificationRequest request) {
         return service.addNotification(request);
     }
 

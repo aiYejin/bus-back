@@ -5,6 +5,7 @@ import com.kt.backendapp.service.FavoriteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class FavoriteController {
 
     // 즐겨찾기 추가
     @PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
-    public FavoriteDtos.FavoriteItem addFavorite(@RequestBody FavoriteDtos.AddFavoriteRequest request) {
+    public FavoriteDtos.FavoriteItem addFavorite(@Valid @RequestBody FavoriteDtos.AddFavoriteRequest request) {
         return service.addFavorite(request);
     }
 
@@ -36,7 +37,7 @@ public class FavoriteController {
     @PutMapping("/{favoriteId}")
     public FavoriteDtos.FavoriteItem updateFavorite(
             @PathVariable Long favoriteId,
-            @RequestBody FavoriteDtos.UpdateFavoriteRequest request) {
+            @Valid @RequestBody FavoriteDtos.UpdateFavoriteRequest request) {
         return service.updateFavorite(favoriteId, request);
     }
 }
