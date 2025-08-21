@@ -39,6 +39,13 @@ public class Recent {
     @Column(name = "viewed_at", nullable = false)
     private OffsetDateTime viewedAt;
 
+    @PrePersist
+    protected void onCreate() {
+        if (viewedAt == null) {
+            viewedAt = OffsetDateTime.now();
+        }
+    }
+
     @JsonProperty("userId")
     public Long getUserIdForJson() {
         return (user != null) ? user.getId() : null;
