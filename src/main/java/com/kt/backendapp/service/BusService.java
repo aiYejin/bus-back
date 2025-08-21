@@ -59,13 +59,13 @@ public class BusService {
                 // 첫번째 차량
                 a.predictTime1,
                 a.locationNo1,
-                a.flag,
+                getBusStatus(a.flag), // flag는 노선 전체 상태
                 getCongestionText(a.crowded1),
                 a.plateNo1,
                 // 두번째 차량
                 a.predictTime2,
                 a.locationNo2,
-                a.flag, // flag는 노선 전체 상태
+                getBusStatus(a.flag), // flag는 노선 전체 상태
                 getCongestionText(a.crowded2),
                 a.plateNo2
             )
@@ -137,6 +137,17 @@ public class BusService {
             case 3 -> "혼잡";
             case 4 -> "매우혼잡";
             default -> null;
+        };
+    }
+
+    private String getBusStatus(String flag) {
+        if (flag == null) return "N"; // 기본값은 운행종료
+        return switch (flag) {
+            case "RUN" -> "Y"; // 운행중
+            case "PASS" -> "Y"; // 운행중
+            case "STOP" -> "N"; // 운행종료
+            case "WAIT" -> "Y"; // 회차지대기 (운행중으로 처리)
+            default -> "N"; // 기타 상태는 운행종료로 처리
         };
     }
 
