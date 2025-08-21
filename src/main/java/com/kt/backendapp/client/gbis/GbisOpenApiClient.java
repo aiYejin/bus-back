@@ -55,8 +55,8 @@ public class GbisOpenApiClient {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Response Body:\n" + response.body());
+            System.out.println("Route Status Code: " + response.statusCode());
+            System.out.println("Route Response Body:\n" + response.body());
             
             ObjectMapper mapper = new ObjectMapper();
             RoutesRes res = mapper.readValue(response.body(), RoutesRes.class);
@@ -65,7 +65,7 @@ public class GbisOpenApiClient {
                     res.response.msgBody.busRouteList != null) ? res.response.msgBody.busRouteList : List.of();
                     
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
+            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return List.of();
         }
@@ -90,8 +90,8 @@ public class GbisOpenApiClient {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Response Body:\n" + response.body());
+            System.out.println("Station Status Code: " + response.statusCode());
+            System.out.println("Station Response Body:\n" + response.body());
             
             ObjectMapper mapper = new ObjectMapper();
             StationsRes res = mapper.readValue(response.body(), StationsRes.class);
@@ -100,7 +100,7 @@ public class GbisOpenApiClient {
                     res.response.msgBody.busStationList != null) ? res.response.msgBody.busStationList : List.of();
                     
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
+            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return List.of();
         }
@@ -113,7 +113,7 @@ public class GbisOpenApiClient {
                 + "&serviceKey=" + getEncodedServiceKey()
                 + "&stationId=" + stationId;
 
-        System.out.println("Arrival Search URL: " + url);
+        // System.out.println("Arrival Search URL: " + url);
         
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -125,8 +125,8 @@ public class GbisOpenApiClient {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Response Body:\n" + response.body());
+            // System.out.println("Status Code: " + response.statusCode());
+            // System.out.println("Response Body:\n" + response.body());
             
             ObjectMapper mapper = new ObjectMapper();
             ArrivalRes res = mapper.readValue(response.body(), ArrivalRes.class);
@@ -135,7 +135,7 @@ public class GbisOpenApiClient {
                     res.response.msgBody.busArrivalList != null) ? res.response.msgBody.busArrivalList : List.of();
                     
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
+            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return List.of();
         }
@@ -148,7 +148,7 @@ public class GbisOpenApiClient {
                 + "&serviceKey=" + getEncodedServiceKey()
                 + "&routeId=" + routeId;
 
-        System.out.println("Route URL: " + url);
+        // System.out.println("Route URL: " + url);
         
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -160,8 +160,8 @@ public class GbisOpenApiClient {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Response Body:\n" + response.body());
+            // System.out.println("Status Code: " + response.statusCode());
+            // System.out.println("Response Body:\n" + response.body());
             
             ObjectMapper mapper = new ObjectMapper();
             RouteRes res = mapper.readValue(response.body(), RouteRes.class);
@@ -173,7 +173,7 @@ public class GbisOpenApiClient {
             return null;
                     
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
+            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -186,7 +186,7 @@ public class GbisOpenApiClient {
                 + "&serviceKey=" + getEncodedServiceKey()
                 + "&routeId=" + routeId;
 
-        System.out.println("Route Station List URL: " + url);
+        // System.out.println("Route Station List URL: " + url);
         
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -198,8 +198,8 @@ public class GbisOpenApiClient {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Response Body:\n" + response.body());
+            // System.out.println("Status Code: " + response.statusCode());
+            // System.out.println("Response Body:\n" + response.body());
             
             ObjectMapper mapper = new ObjectMapper();
             RouteStationRes res = mapper.readValue(response.body(), RouteStationRes.class);
@@ -208,7 +208,7 @@ public class GbisOpenApiClient {
                     res.response.msgBody.busRouteStationList != null) ? res.response.msgBody.busRouteStationList : List.of();
                     
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
+            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return List.of();
         }
@@ -221,7 +221,7 @@ public class GbisOpenApiClient {
                 + "&serviceKey=" + getEncodedServiceKey()
                 + "&stationId=" + stationId;
 
-        System.out.println("Station Detail URL: " + url);
+        // System.out.println("Station Detail URL: " + url);
         
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -233,8 +233,8 @@ public class GbisOpenApiClient {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Response Body:\n" + response.body());
+            // System.out.println("Status Code: " + response.statusCode());
+            // System.out.println("Response Body:\n" + response.body());
             
             ObjectMapper mapper = new ObjectMapper();
             StationRes res = mapper.readValue(response.body(), StationRes.class);
@@ -246,7 +246,7 @@ public class GbisOpenApiClient {
             return null;
                     
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
+            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -260,7 +260,7 @@ public class GbisOpenApiClient {
                 + "&x=" + x
                 + "&y=" + y;
 
-        System.out.println("Station Around URL: " + url);
+        // System.out.println("Station Around URL: " + url);
         
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -272,8 +272,8 @@ public class GbisOpenApiClient {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Response Body:\n" + response.body());
+            // System.out.println("Status Code: " + response.statusCode());
+            // System.out.println("Response Body:\n" + response.body());
             
             ObjectMapper mapper = new ObjectMapper();
             StationAroundRes res = mapper.readValue(response.body(), StationAroundRes.class);
@@ -282,7 +282,7 @@ public class GbisOpenApiClient {
                     res.response.msgBody.busStationAroundList != null) ? res.response.msgBody.busStationAroundList : List.of();
                     
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
+            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return List.of();
         }
@@ -295,7 +295,7 @@ public class GbisOpenApiClient {
                 + "&serviceKey=" + getEncodedServiceKey()
                 + "&routeId=" + routeId;
 
-        System.out.println("Route Line List URL: " + url);
+        // System.out.println("Route Line List URL: " + url);
         
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -307,8 +307,8 @@ public class GbisOpenApiClient {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             
-            System.out.println("Status Code: " + response.statusCode());
-            System.out.println("Response Body:\n" + response.body());
+            // System.out.println("Status Code: " + response.statusCode());
+            // System.out.println("Response Body:\n" + response.body());
             
             ObjectMapper mapper = new ObjectMapper();
             RouteLineRes res = mapper.readValue(response.body(), RouteLineRes.class);
@@ -317,7 +317,7 @@ public class GbisOpenApiClient {
                     res.response.msgBody.busRouteLineList != null) ? res.response.msgBody.busRouteLineList : List.of();
                     
         } catch (IOException | InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
+            // System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
             return List.of();
         }

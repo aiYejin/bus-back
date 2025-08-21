@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FavoriteService {
+public class FavoriteService implements FavoriteServiceInterface {
     private final FavoriteRepository repository;
     private final UserRepository userRepository;
 

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class NotificationService {
+public class NotificationService implements NotificationServiceInterface {
     private final NotificationRepository repository;
     private final UserRepository userRepository;
 

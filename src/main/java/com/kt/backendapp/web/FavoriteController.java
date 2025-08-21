@@ -1,7 +1,7 @@
 package com.kt.backendapp.web;
 
 import com.kt.backendapp.dto.FavoriteDtos;
-import com.kt.backendapp.service.FavoriteService;
+import com.kt.backendapp.service.FavoriteServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/favorites")
 @RequiredArgsConstructor
 public class FavoriteController {
-    private final FavoriteService service;
+    private final FavoriteServiceInterface service;
 
     // 즐겨찾기 목록 조회
     @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)

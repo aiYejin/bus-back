@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BusReportService {
+public class BusReportService implements BusReportServiceInterface {
 
     private final BusReportRepository repository;
     private final UserRepository userRepository;

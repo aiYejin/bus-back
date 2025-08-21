@@ -1,7 +1,7 @@
 package com.kt.backendapp.web;
 
 import com.kt.backendapp.dto.bus.AuthDtos;
-import com.kt.backendapp.service.AuthService;
+import com.kt.backendapp.service.AuthServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    private final AuthService service;
+    private final AuthServiceInterface service;
 
     // 로그인
     @PostMapping("/login")

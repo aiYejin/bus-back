@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class BusService {
+public class BusService implements BusServiceInterface {
     private final GbisOpenApiClient api;
     private final UserRepository userRepository;
 

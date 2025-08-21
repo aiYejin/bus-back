@@ -1,7 +1,7 @@
 package com.kt.backendapp.web;
 
 import com.kt.backendapp.dto.NotificationDtos;
-import com.kt.backendapp.service.NotificationService;
+import com.kt.backendapp.service.NotificationServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/notifications")
 @RequiredArgsConstructor
 public class NotificationController {
-    private final NotificationService service;
+    private final NotificationServiceInterface service;
 
     // 알림 목록 조회
     @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)

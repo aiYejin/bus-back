@@ -2,7 +2,7 @@ package com.kt.backendapp.web;
 
 import com.kt.backendapp.domain.ReportType;
 import com.kt.backendapp.dto.BusReportDtos;
-import com.kt.backendapp.service.BusReportService;
+import com.kt.backendapp.service.BusReportServiceInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BusReportController {
 
-    private final BusReportService service;
+    private final BusReportServiceInterface service;
 
     // 사용자별 신고 목록 조회
     @GetMapping("/user/{userId}")

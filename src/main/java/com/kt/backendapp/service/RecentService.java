@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RecentService {
+public class RecentService implements RecentServiceInterface {
     private final RecentRepository repository;
     private final UserRepository userRepository;
 
@@ -70,25 +70,15 @@ public class RecentService {
     // 최근 조회 삭제
     @Transactional
     public void deleteRecent(Long recentId, Long userId) {
-        System.out.println("RecentService.deleteRecent 호출 - recentId: " + recentId + ", userId: " + userId);
-        
         Recent recent = repository.findById(recentId)
-                .orElseThrow(() -> {
-                    System.out.println("최근 조회 항목을 찾을 수 없음 - recentId: " + recentId);
-                    return new IllegalArgumentException("최근 조회 항목을 찾을 수 없습니다.");
-                });
-        
-        System.out.println("찾은 Recent 엔티티 - id: " + recent.getId() + ", userIdForJson: " + recent.getUserIdForJson());
+                .orElseThrow(() -> new IllegalArgumentException("최근 조회 항목을 찾을 수 없습니다."));
         
         // 본인의 최근 조회만 삭제 가능
         if (!recent.getUserIdForJson().equals(userId)) {
-            System.out.println("권한 없음 - recent.userId: " + recent.getUserIdForJson() + ", 요청 userId: " + userId);
             throw new IllegalArgumentException("본인의 최근 조회만 삭제할 수 있습니다.");
         }
         
-        System.out.println("최근 조회 삭제 실행 중...");
         repository.delete(recent);
-        System.out.println("최근 조회 삭제 완료");
     }
 
     // Entity를 DTO로 변환

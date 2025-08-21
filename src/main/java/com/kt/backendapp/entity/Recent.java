@@ -2,7 +2,6 @@ package com.kt.backendapp.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,7 +36,6 @@ public class Recent {
     @Column(name = "additional_info", length = 200)
     private String additionalInfo;  // "강남역 ↔ 서초역" 또는 "02301"
 
-    @CreationTimestamp
     @Column(name = "viewed_at", nullable = false)
     private OffsetDateTime viewedAt;
 

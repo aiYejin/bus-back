@@ -3,7 +3,7 @@ package com.kt.backendapp.web;
 
 import com.kt.backendapp.dto.bus.SearchDtos;
 import com.kt.backendapp.dto.bus.DetailDtos;
-import com.kt.backendapp.service.BusService;
+import com.kt.backendapp.service.BusServiceInterface;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class BusController {
-  private final BusService service;
+  private final BusServiceInterface service;
 
   @GetMapping(value="/search", produces=MediaType.APPLICATION_JSON_VALUE)
   public SearchDtos.SearchResponse search(@RequestParam String q) {
