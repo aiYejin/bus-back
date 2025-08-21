@@ -23,7 +23,8 @@ public final class DetailDtos {
         Integer peekAlloc,
         Integer nPeekAlloc,
         String turnStNm,
-        List<StationItem> stations
+        List<StationItem> stations,
+        List<RouteLineItem> routeLines
     ) {}
     
     public record StationItem(
@@ -38,6 +39,12 @@ public final class DetailDtos {
         String centerYn,
         String turnYn,
         Integer turnSeq
+    ) {}
+    
+    public record RouteLineItem(
+        Integer lineSeq,  // 형상 좌표 순서
+        Double lat,       // 위도 (Y좌표)
+        Double lng        // 경도 (X좌표)
     ) {}
 
     // 정류장 상세 정보 (도착 정보 포함)

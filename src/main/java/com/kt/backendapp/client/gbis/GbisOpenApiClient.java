@@ -6,6 +6,7 @@ import com.kt.backendapp.dto.gbis.ArrivalRes;
 import com.kt.backendapp.dto.gbis.RoutesRes;
 import com.kt.backendapp.dto.gbis.RouteRes;
 import com.kt.backendapp.dto.gbis.RouteStationRes;
+import com.kt.backendapp.dto.gbis.RouteLineRes;
 import com.kt.backendapp.dto.gbis.StationRes;
 import com.kt.backendapp.dto.gbis.StationAroundRes;
 
@@ -279,6 +280,41 @@ public class GbisOpenApiClient {
             
             return (res != null && res.response != null && res.response.msgBody != null && 
                     res.response.msgBody.busStationAroundList != null) ? res.response.msgBody.busStationAroundList : List.of();
+                    
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            return List.of();
+        }
+    }
+
+    // 노선별 형상 정보 API
+    public List<RouteLineRes.Response.MsgBody.BusRouteLineList> getRouteLines(String routeId) {
+        String url = "https://apis.data.go.kr/6410000/busrouteservice/v2/getBusRouteLineListv2"
+                + "?format=json"
+                + "&serviceKey=" + getEncodedServiceKey()
+                + "&routeId=" + routeId;
+
+        System.out.println("Route Line List URL: " + url);
+        
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+        
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            
+            System.out.println("Status Code: " + response.statusCode());
+            System.out.println("Response Body:\n" + response.body());
+            
+            ObjectMapper mapper = new ObjectMapper();
+            RouteLineRes res = mapper.readValue(response.body(), RouteLineRes.class);
+            
+            return (res != null && res.response != null && res.response.msgBody != null && 
+                    res.response.msgBody.busRouteLineList != null) ? res.response.msgBody.busRouteLineList : List.of();
                     
         } catch (IOException | InterruptedException e) {
             System.out.println("Error: " + e.getMessage());

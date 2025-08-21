@@ -138,6 +138,15 @@ public class BusService {
             )
         ).toList();
         
+        // 노선 형상 정보 가져오기
+        var routeLines = api.getRouteLines(routeId).stream().map(line ->
+            new DetailDtos.RouteLineItem(
+                line.lineSeq,
+                line.y,     // lat
+                line.x      // lng
+            )
+        ).toList();
+        
         return new DetailDtos.RouteDetailResponse(
             route.routeId.toString(),
             route.routeName,
@@ -157,7 +166,8 @@ public class BusService {
             route.peekAlloc,
             route.nPeekAlloc,
             route.turnStNm,
-            stations
+            stations,
+            routeLines
         );
     }
 
