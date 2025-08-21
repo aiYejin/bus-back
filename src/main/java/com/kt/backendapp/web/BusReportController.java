@@ -1,7 +1,7 @@
 package com.kt.backendapp.web;
 
+import com.kt.backendapp.domain.ReportType;
 import com.kt.backendapp.dto.BusReportDtos;
-import com.kt.backendapp.entity.ReportType;
 import com.kt.backendapp.service.BusReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,11 @@ public class BusReportController {
     // 사용자별 신고 목록 조회
     @GetMapping("/user/{userId}")
     public List<BusReportDtos.BusReportItem> getReports(@PathVariable Long userId) {
-        return service.getReports(userId);
+        try {
+            return service.getReports(userId);
+        } catch (Exception e) {
+            throw new RuntimeException("사용자 신고 목록 조회 실패: " + e.getMessage(), e);
+        }
     }
 
     // 모든 신고 목록 조회

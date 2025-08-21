@@ -44,6 +44,8 @@ public class NotificationService {
                 .user(user)
                 .stationId(request.stationId())
                 .routeId(request.routeId())
+                .stationName(request.stationName())
+                .routeName(request.routeName())
                 .alertMinutes(request.alertMinutes() != null ? request.alertMinutes() : 3)
                 .startTime(request.startTime())  // 시작 시간 추가
                 .build();
@@ -68,6 +70,8 @@ public class NotificationService {
                 notification.getUserIdForJson(),
                 notification.getStationId(),
                 notification.getRouteId(),
+                notification.getStationName(),
+                notification.getRouteName(),
                 notification.getAlertMinutes(),
                 notification.getStartTime(),  // Add this line
                 notification.getCreatedAt()

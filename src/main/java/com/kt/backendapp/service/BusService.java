@@ -52,24 +52,29 @@ public class BusService {
         if (station == null) return null;
         
         // 2. 도착 정보 가져오기
-        var arrivals = api.getArrivals(stationId).stream().map(a ->
-            new ArrivalDtos.Item(
-                a.routeId.toString(),
-                a.routeName,
-                // 첫번째 차량
-                a.predictTime1,
-                a.locationNo1,
-                getBusStatus(a.flag), // flag는 노선 전체 상태
-                getCongestionText(a.crowded1),
-                a.plateNo1,
-                // 두번째 차량
-                a.predictTime2,
-                a.locationNo2,
-                getBusStatus(a.flag), // flag는 노선 전체 상태
-                getCongestionText(a.crowded2),
-                a.plateNo2
-            )
-        ).toList();
+        var arrivalsData = api.getArrivals(stationId);
+        java.util.List<ArrivalDtos.Item> arrivals = new java.util.ArrayList<>();
+        
+        if (arrivalsData != null && !arrivalsData.isEmpty()) {
+            arrivals = arrivalsData.stream().map(a ->
+                new ArrivalDtos.Item(
+                    a.routeId.toString(),
+                    a.routeName,
+                    // 첫번째 차량
+                    parsePredictTime(a.predictTime1),
+                    parseLocationNo(a.locationNo1),
+                    getBusStatus(a.flag), // flag는 노선 전체 상태
+                    getCongestionText(a.crowded1),
+                    a.plateNo1,
+                    // 두번째 차량
+                    parsePredictTime(a.predictTime2),
+                    parseLocationNo(a.locationNo2),
+                    getBusStatus(a.flag), // flag는 노선 전체 상태
+                    getCongestionText(a.crowded2),
+                    a.plateNo2
+                )
+            ).toList();
+        }
 
         return new DetailDtos.StationDetailResponse(
             station.stationId.toString(),
@@ -81,6 +86,33 @@ public class BusService {
             station.centerYn,
             arrivals
         );
+    }
+
+    // 정류장 도착 정보만 가져오기
+    public java.util.List<ArrivalDtos.Item> getStationArrivals(String stationId) {
+        var arrivals = api.getArrivals(stationId);
+        if (arrivals == null || arrivals.isEmpty()) {
+            return new java.util.ArrayList<>();
+        }
+        
+        return arrivals.stream().map(a ->
+            new ArrivalDtos.Item(
+                a.routeId.toString(),
+                a.routeName,
+                // 첫번째 차량
+                parsePredictTime(a.predictTime1),
+                parseLocationNo(a.locationNo1),
+                getBusStatus(a.flag),
+                getCongestionText(a.crowded1),
+                a.plateNo1,
+                // 두번째 차량
+                parsePredictTime(a.predictTime2),
+                parseLocationNo(a.locationNo2),
+                getBusStatus(a.flag),
+                getCongestionText(a.crowded2),
+                a.plateNo2
+            )
+        ).toList();
     }
 
 
@@ -149,6 +181,16 @@ public class BusService {
             case "WAIT" -> "Y"; // 회차지대기 (운행중으로 처리)
             default -> "N"; // 기타 상태는 운행종료로 처리
         };
+    }
+
+    // 예측 시간을 분 단위로 변환
+    private Integer parsePredictTime(Integer predictTime) {
+        return predictTime;
+    }
+
+    // 위치 정보를 정수로 변환
+    private Integer parseLocationNo(Integer locationNo) {
+        return locationNo;
     }
 
     // 주변 정류장 검색

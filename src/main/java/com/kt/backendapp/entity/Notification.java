@@ -30,6 +30,12 @@ public class Notification {
     @Column(name = "route_id", length = 64)  // 선택사항
     private String routeId;
 
+    @Column(name = "station_name", length = 128)
+    private String stationName;
+
+    @Column(name = "route_name", length = 64)
+    private String routeName;
+
     @Column(name = "alert_minutes", nullable = false)
     private Integer alertMinutes;
 

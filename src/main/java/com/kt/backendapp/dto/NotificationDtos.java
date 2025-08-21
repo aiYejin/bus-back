@@ -10,6 +10,8 @@ public final class NotificationDtos {
         Long userId,
         String stationId,
         String routeId,
+        String stationName,
+        String routeName,
         Integer alertMinutes,
         OffsetDateTime startTime,  // 시작 시간 추가
         OffsetDateTime createdAt
@@ -20,6 +22,8 @@ public final class NotificationDtos {
         Long userId,
         String stationId,
         String routeId,
+        String stationName,
+        String routeName,
         Integer alertMinutes,
         OffsetDateTime startTime  // 시작 시간 추가
     ) {}

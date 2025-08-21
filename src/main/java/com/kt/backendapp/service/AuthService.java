@@ -136,17 +136,25 @@ public class AuthService {
     // 비밀번호 변경
     @Transactional
     public AuthDtos.MessageResponse changePassword(Long userId, AuthDtos.ChangePasswordRequest request) {
+        log.info("비밀번호 변경 요청 - userId: {}, currentPassword: {}, newPassword: {}", 
+                userId, request.currentPassword(), request.newPassword());
+        
         User user = repository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
+        log.info("사용자 찾음 - ID: {}, 저장된 비밀번호: {}", user.getId(), user.getPassword());
+
         // 현재 비밀번호 확인
         if (!user.getPassword().equals(request.currentPassword())) {
+            log.error("비밀번호 불일치 - 입력된 비밀번호: {}, 저장된 비밀번호: {}", 
+                    request.currentPassword(), user.getPassword());
             throw new IllegalArgumentException("현재 비밀번호가 올바르지 않습니다.");
         }
 
         user.setPassword(request.newPassword());
         repository.save(user);
 
+        log.info("비밀번호 변경 완료 - userId: {}", userId);
         return new AuthDtos.MessageResponse("비밀번호가 변경되었습니다.");
     }
 

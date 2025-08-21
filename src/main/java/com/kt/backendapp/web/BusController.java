@@ -25,6 +25,11 @@ public class BusController {
       return service.getStationDetail(stationId);
   }
 
+  @GetMapping(value="/stations/{stationId}/arrivals", produces=MediaType.APPLICATION_JSON_VALUE)
+  public java.util.List<com.kt.backendapp.dto.bus.ArrivalDtos.Item> getStationArrivals(@PathVariable String stationId) {
+      return service.getStationArrivals(stationId);
+  }
+
   @GetMapping(value="/routes/{routeId}/detail", produces=MediaType.APPLICATION_JSON_VALUE)
   public DetailDtos.RouteDetailResponse getRouteDetail(@PathVariable String routeId) {
       return service.getRouteDetail(routeId);
