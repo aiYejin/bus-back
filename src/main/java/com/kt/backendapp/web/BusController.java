@@ -42,13 +42,4 @@ public class BusController {
           @RequestParam String y) {
       return service.getStationsAround(x, y);
   }
-
-  // 사용자 위치 업데이트
-  @PutMapping(value="/users/{userId}/location")
-  public void updateUserLocation(
-          @PathVariable Long userId,
-          @RequestParam Double lat,
-          @RequestParam Double lng) {
-      service.updateUserLocation(userId, lat, lng);
-  }
 }

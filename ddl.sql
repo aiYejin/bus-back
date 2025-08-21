@@ -13,6 +13,7 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     current_lat DOUBLE PRECISION,
     current_lng DOUBLE PRECISION,
+    current_location_name VARCHAR(500),
     location_updated_at TIMESTAMP WITH TIME ZONE,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL
 );

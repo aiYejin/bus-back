@@ -29,7 +29,7 @@ public final class DetailDtos {
     public record StationItem(
         String stationId,
         String stationName,
-        Integer mobileNo,
+        String arsId,
         Integer stationSeq,
         Double lat,
         Double lng,
@@ -44,7 +44,7 @@ public final class DetailDtos {
     public record StationDetailResponse(
         String stationId,     // 정류장 ID
         String stationName,   // 정류장명
-        Integer mobileNo,     // 정류장 번호
+        String arsId,         // ARS 번호
         Double lat,           // 위도
         Double lng,           // 경도
         String regionName,    // 정류장 위치 지역명

@@ -21,9 +21,6 @@ public class DomainMapper {
                 .username(entity.getUsername())
                 .email(entity.getEmail())
                 .password(entity.getPassword())
-                .currentLat(entity.getCurrentLat())
-                .currentLng(entity.getCurrentLng())
-                .locationUpdatedAt(entity.getLocationUpdatedAt())
                 .createdAt(entity.getCreatedAt())
                 .build();
     }
@@ -36,9 +33,6 @@ public class DomainMapper {
                 .username(domain.getUsername())
                 .email(domain.getEmail())
                 .password(domain.getPassword())
-                .currentLat(domain.getCurrentLat())
-                .currentLng(domain.getCurrentLng())
-                .locationUpdatedAt(domain.getLocationUpdatedAt())
                 .createdAt(domain.getCreatedAt())
                 .build();
     }

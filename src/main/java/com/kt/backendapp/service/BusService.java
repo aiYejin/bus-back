@@ -79,7 +79,7 @@ public class BusService {
         return new DetailDtos.StationDetailResponse(
             station.stationId.toString(),
             station.stationName,
-            station.mobileNo,
+            station.mobileNo != null ? station.mobileNo.toString() : null,
             station.y,
             station.x,
             station.regionName,
@@ -126,7 +126,7 @@ public class BusService {
             new DetailDtos.StationItem(
                 s.stationId.toString(),
                 s.stationName,
-                s.mobileNo,
+                s.mobileNo != null ? s.mobileNo.toString() : null,
                 s.stationSeq,
                 s.y,        // lat
                 s.x,        // lng
@@ -206,30 +206,5 @@ public class BusService {
         ).toList();
 
         return new SearchDtos.StationAroundResponse(stations);
-    }
-
-    // 사용자 위치 업데이트
-    @Transactional
-    public void updateUserLocation(Long userId, Double lat, Double lng) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-        
-        user.setCurrentLat(lat);
-        user.setCurrentLng(lng);
-        user.setLocationUpdatedAt(OffsetDateTime.now());
-        
-        userRepository.save(user);
-    }
-
-    // 사용자 위치 기반 주변 정류장
-    public SearchDtos.StationAroundResponse getNearbyStations(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
-        
-        // 사용자 위치가 없으면 기본값 사용 (강남역)
-        Double lat = user.getCurrentLat() != null ? user.getCurrentLat() : 37.49545;
-        Double lng = user.getCurrentLng() != null ? user.getCurrentLng() : 127.0284667;
-        
-        return getStationsAround(lat.toString(), lng.toString());
     }
 }
